@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Upload, Play, ArrowLeftRight, Download, RefreshCw } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { API_URL } from "../utils/api"
 
 export default function OaiTab() {
   const [preview, setPreview] = useState<any[] | null>(null)
@@ -21,7 +22,7 @@ export default function OaiTab() {
     const formData = new FormData()
     formData.append("file", file)
 
-    const res = await fetch("http://localhost:8000/preview", {
+    const res = await fetch(`${API_URL}/preview`, {
       method: "POST",
       body: formData,
     })
@@ -33,7 +34,7 @@ export default function OaiTab() {
   // Generate Schedule
   const handleGenerate = async () => {
     if (!preview) return
-    const res = await fetch("http://localhost:8000/generate_schedule", {
+    const res = await fetch(`${API_URL}/generate_schedule`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ availability: preview }),
@@ -84,7 +85,7 @@ export default function OaiTab() {
   // Swap Shift
   const handleSwap = async () => {
     if (!schedule || !emp1 || !emp2 || !shiftSel) return
-    const res = await fetch("http://localhost:8000/swap_shift", {
+    const res = await fetch(`${API_URL}/swap_shift`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 

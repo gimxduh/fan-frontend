@@ -1,25 +1,26 @@
 //JaiTab.tsx
 'use client'
 import { useState } from "react"
+import { API_URL } from "../utils/api"
 
 export default function JaiTab() {
   const [output, setOutput] = useState("")
   const [empId, setEmpId] = useState("101") // ค่า default = Alex
 
   const fetchGrowth = async () => {
-    const res = await fetch(`http://localhost:8000/jai/growth/${empId}`)
+    const res = await fetch(`${API_URL}/jai/growth/${empId}`)
     const data = await res.json()
     setOutput(data.result)
   }
 
   const fetchNudge = async () => {
-    const res = await fetch(`http://localhost:8000/jai/nudge/${empId}`)
+    const res = await fetch(`${API_URL}/jai/nudge/${empId}`)
     const data = await res.json()
     setOutput(data.result)
   }
 
   const fetchSkills = async () => {
-    const res = await fetch(`http://localhost:8000/jai/skills/${empId}`)
+    const res = await fetch(`${API_URL}/jai/skills/${empId}`)
     const data = await res.json()
     setOutput(data.result)
   }

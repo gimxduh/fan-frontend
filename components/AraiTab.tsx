@@ -2,6 +2,7 @@
 'use client'
 import { useState } from 'react'
 import { Trash2, Send, Mic, Volume2 } from 'lucide-react'
+import { API_URL } from "../utils/api"
 
 type ChatMessage = {
   role: 'user' | 'assistant'
@@ -63,7 +64,7 @@ export default function AraiTab() {
     setChat(prev => [...prev, { role: 'user', content: q }])
 
     try {
-      const res = await fetch("http://localhost:8000/ask_arai", {
+      const res = await fetch(`${API_URL}/ask_arai`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: q, style }),

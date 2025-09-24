@@ -2,6 +2,7 @@
 'use client'
 import { useState, useEffect } from "react"
 import toast from "react-hot-toast"
+import { API_URL } from "../utils/api"
 
 type Mode = "menu" | "submit" | "upvote" | "kudos" | "challenge" | "summary"
 
@@ -21,13 +22,13 @@ export default function KaiTab() {
 
   // ---------- Backend calls ----------
   const fetchIdeas = async () => {
-    const res = await fetch("http://localhost:8000/kai/ideas")
+    const res = await fetch(`${API_URL}/kai/ideas`)
     const data = await res.json()
     setIdeas(data.ideas || [])
   }
 
   const submitIdea = async () => {
-    const res = await fetch("http://localhost:8000/kai/idea", {
+    const res = await fetch(`${API_URL}/kai/idea`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ idea_text: ideaText, employee, branch })
@@ -38,20 +39,20 @@ export default function KaiTab() {
   }
 
   const upvoteIdea = async () => {
-    const res = await fetch(`http://localhost:8000/kai/upvote/${ideaId}`, { method: "POST" })
+    const res = await fetch(`${API_URL}/kai/upvote/${ideaId}`, { method: "POST" })
     const data = await res.json()
     toast.success(data.result)
     setMode("menu")
   }
 
   const viewChallenge = async () => {
-    const res = await fetch("http://localhost:8000/kai/challenge")
+    const res = await fetch(`${API_URL}/kai/challenge`)
     const data = await res.json()
     setOutput(data.result)
   }
 
   const postKudos = async () => {
-    const res = await fetch("http://localhost:8000/kai/kudos", {
+    const res = await fetch(`${API_URL}/kai/kudos`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ from_emp: fromEmp, to_emp: toEmp, message })
@@ -62,7 +63,7 @@ export default function KaiTab() {
   }
 
   const managerSummary = async () => {
-    const res = await fetch("http://localhost:8000/kai/summary")
+    const res = await fetch(`${API_URL}/kai/summary`)
     const data = await res.json()
     setOutput(data.result)
   }
